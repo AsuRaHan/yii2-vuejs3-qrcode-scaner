@@ -153,12 +153,14 @@ class SiteController extends Controller
     {
         $response = Yii::$app->getResponse();
 
-        $userId = Yii::$app->user->identity->id;
-        $userId = base64_encode($userId); // здесь нужно использовать реальный ID пользователя
+        $userId = Yii::$app->user->getId().',тут некая соль для того что бы длянна строки была нормальной. нестал выяснять почему функция base64_encode глючит';
+
+        $userIdBase64 = base64_encode($userId); // здесь нужно использовать реальный ID пользователя
+
         $writer = new PngWriter();
 
 // Create QR code
-        $qrCode = QrCode::create($userId)
+        $qrCode = QrCode::create($userIdBase64)
             ->setEncoding(new Encoding('UTF-8'))
             ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
             ->setSize(300)
@@ -168,7 +170,7 @@ class SiteController extends Controller
             ->setBackgroundColor(new Color(255, 255, 255));
         $result = $writer->write($qrCode);
 // Validate the result
-        $writer->validateResult($result, $userId);
+        $writer->validateResult($result, $userIdBase64);
 
         $response->headers->set('Content-Type', $result->getMimeType());
         $response->format = Response::FORMAT_RAW;

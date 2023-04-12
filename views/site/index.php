@@ -2,7 +2,10 @@
 
 /** @var yii\web\View $this */
 
+
+use yii\helpers\Url;
 $this->title = 'My Yii Application';
+$urlqr = Url::toRoute(['site/code']);
 ?>
 <div class="site-index">
 
@@ -15,7 +18,7 @@ $this->title = 'My Yii Application';
 
     <div class="body-content">
 
-<img src="/web/site/code">
+<img src="<?= $urlqr ?>">
 
     </div>
 </div>

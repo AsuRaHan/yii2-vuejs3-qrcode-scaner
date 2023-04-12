@@ -18,5 +18,5 @@ AddDefaultCharset utf-8
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^.*$ - [NC,L]
 
-    RewriteRule ^web/.*$ /web/index.php [NC,L]
+    RewriteRule ^/.*$ /web/index.php [NC,L]
 </IfModule>
